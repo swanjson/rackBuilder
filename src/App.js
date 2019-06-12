@@ -12,7 +12,7 @@ function App() {
           {/* <HideableText text="Dynamic Text" /> */}
           <p>Your rack:</p>
           <br></br>
-          <AutoCompleteText items={CamNames}/>
+          <AutoCompleteText items={CamNames} />
           <br></br>
           <p>Pieces Required:</p>
           <br></br>
