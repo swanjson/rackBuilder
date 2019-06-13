@@ -1,11 +1,10 @@
 import React from 'react';
-import './AutoCompleteText.css';
+import './SearchBox2.css';
 
-export default class AutoCompleteText extends React.Component{
+export default class SearchBox2 extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            selectedItems: [],
             suggestions: [],
             text: '',
         };
@@ -25,23 +24,9 @@ export default class AutoCompleteText extends React.Component{
 
     suggestionSelected(value) {
         this.setState(() => ({
-            text: "",
+            text: value,
             suggestions: [],
-            selectedItems: this.state.selectedItems.concat([value]),
         }));
-    }
-
-    createNewList(value){
-        const { selectedItems } = this.state;
-        if(selectedItems.length === 0){
-            return null;
-        }
-        return(
-        <ul>
-            {console.log(value)}
-            {selectedItems.map((value) => <li>{value}</li>)} 
-        </ul>
-        );
     }
 
     renderSuggestions() {
@@ -56,13 +41,16 @@ export default class AutoCompleteText extends React.Component{
         );
     }
 
+    renderSelected(){
+        
+    }
+
     render() {
         const { text } = this.state;
         return(
-            <div className="AutoCompleteText">
+            <div className="SearchBox2">
                 <input value={text} onChange={this.onTextChanged} type="text" />
                 {this.renderSuggestions()}
-                {this.createNewList()}
             </div>
         )
     }

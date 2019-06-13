@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import HideableText from './HideableText';
 import AutoCompleteText from './AutoCompleteText';
+import SearchBox2 from './SearchBox2';
 import CamNames from './CamNames';
 
 function App() {
@@ -14,9 +14,9 @@ function App() {
           <br></br>
           <AutoCompleteText items={CamNames} />
           <br></br>
-          <p>Pieces Required:</p>
+          <p>Pieces Required :</p>
           <br></br>
-          <AutoCompleteText items={CamNames}/>
+          <SearchBox2 items={CamNames}/>
         </div>
       </div>
     </div>
