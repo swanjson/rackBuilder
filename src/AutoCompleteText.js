@@ -15,6 +15,7 @@ export default class AutoCompleteText extends React.Component{
         const { items } = this.props;
         const value = e.target.value;
         let suggestions = [];
+        if( value > "")
             suggestions = items.filter(item => {
                 const lc = item.toLowerCase();
                 const filter = value.toLowerCase();
@@ -31,18 +32,17 @@ export default class AutoCompleteText extends React.Component{
         }));
     }
 
-    createNewList(value){
+    createNewList(){
         const { selectedItems } = this.state;
         if(selectedItems.length === 0){
             return null;
         }
         return(
-        <ul>
-            {console.log(value)}
+        <ul className="ul-2">
             {selectedItems.map((value) => <li>{value}</li>)} 
         </ul>
         );
-    }
+    } 
 
     renderSuggestions() {
         const { suggestions } = this.state;
@@ -59,11 +59,11 @@ export default class AutoCompleteText extends React.Component{
     render() {
         const { text } = this.state;
         return(
-            <div className="AutoCompleteText">
-                <input value={text} onChange={this.onTextChanged} type="text" />
-                {this.renderSuggestions()}
-                {this.createNewList()}
-            </div>
+                <div className="AutoCompleteText">
+                    <input value={text} onChange={this.onTextChanged} type="text" />
+                    {this.renderSuggestions()}
+                    {this.createNewList()}
+                </div>
         )
     }
 }

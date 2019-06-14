@@ -14,6 +14,7 @@ export default class SearchBox2 extends React.Component{
         const { items } = this.props;
         const value = e.target.value;
         let suggestions = [];
+        if( value > "")
             suggestions = items.filter(item => {
                 const lc = item.toLowerCase();
                 const filter = value.toLowerCase();
