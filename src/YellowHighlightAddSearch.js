@@ -1,10 +1,11 @@
 import React from 'react';
-import './SearchBox2.css';
+import './YellowHighlightAddSearch.css';
 
-export default class SearchBox2 extends React.Component{
+export default class YellowHighlightAddSearch extends React.Component{
     constructor(props){
         super(props);
         this.state = {
+            selectedItems: [],
             suggestions: [],
             text: '',
         };
@@ -25,10 +26,23 @@ export default class SearchBox2 extends React.Component{
 
     suggestionSelected(value) {
         this.setState(() => ({
-            text: value,
+            text: "",
             suggestions: [],
+            selectedItems: this.state.selectedItems.concat([value]),
         }));
     }
+
+    createNewList(){
+        const { selectedItems } = this.state;
+        if(selectedItems.length === 0){
+            return null;
+        }
+        return(
+        <ul className="ul-3">
+            {selectedItems.map((value) => <li>{value}</li>)} 
+        </ul>
+        );
+    } 
 
     renderSuggestions() {
         const { suggestions } = this.state;
@@ -42,17 +56,14 @@ export default class SearchBox2 extends React.Component{
         );
     }
 
-    renderSelected(){
-        
-    }
-
     render() {
         const { text } = this.state;
         return(
-            <div className="SearchBox2">
-                <input value={text} onChange={this.onTextChanged} type="text" />
-                {this.renderSuggestions()}
-            </div>
+                <div className="YellowHighlightAddSearch">
+                    <input value={text} onChange={this.onTextChanged} type="text" />
+                    {this.renderSuggestions()}
+                    {this.createNewList()}
+                </div>
         )
     }
 }

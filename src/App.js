@@ -1,8 +1,9 @@
 import React from 'react';
 import './App.css';
-import AutoCompleteText from './AutoCompleteText';
-import SearchBox2 from './SearchBox2';
+import AutocompleteSearchFill from './AutoCompleteSearchFill'
 import CamNames from './CamNames';
+import YellowHighlightAddSearch from './YellowHighlightAddSearch';
+import AutoCompleteText from './AutoCompleteText';
 
 function App() {
   return (
@@ -16,7 +17,10 @@ function App() {
           <br></br>
           <p>Pieces Required :</p>
           <br></br>
-          <SearchBox2 items={CamNames}/>
+          <YellowHighlightAddSearch items={CamNames}/>
+          <p>Pieces To Get :</p>
+          <br></br>
+          <AutocompleteSearchFill items={CamNames}/>
         </div>
       </div>
     </div>
