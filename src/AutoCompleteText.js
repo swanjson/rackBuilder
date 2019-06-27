@@ -1,5 +1,7 @@
 import React from 'react';
 import './AutoCompleteText.css';
+import { VirtualTimeScheduler } from 'rxjs';
+import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
 
 export default class AutoCompleteText extends React.Component{
     constructor(props){
@@ -11,13 +13,18 @@ export default class AutoCompleteText extends React.Component{
         };
     }
 
+    getItemString = (item) => {
+        return `${item.manufacturer} ${item.model} ${item.size} ${item.color}`;
+    }
+
     onTextChanged = (e) => {
         const { items } = this.props;
         const value = e.target.value;
         let suggestions = [];
         if( value > "")
             suggestions = items.filter(item => {
-                const lc = item.toLowerCase();
+                const itemText = this.getItemString(item);
+                const lc = itemText.toLowerCase();
                 const filter = value.toLowerCase();
                 return lc.includes(filter)
         })
@@ -32,6 +39,10 @@ export default class AutoCompleteText extends React.Component{
         }));
     }
 
+    deleteItem = (itemId) => {
+        alert(`deleting item: ${itemId}`);
+    }
+
     createNewList(){
         const { selectedItems } = this.state;
         if(selectedItems.length === 0){
@@ -39,10 +50,15 @@ export default class AutoCompleteText extends React.Component{
         }
         return(
         <ul className="ul-2">
-            {selectedItems.map((value) => <li>{value}</li>)} 
+            {selectedItems.map((value) => {
+                return <li key={value.id}>
+                    Manufacturer: {value.manufacturer}, Color: {value.color}
+                    <button onClick={() => this.deleteItem(value.id)}>Delete</button>
+                </li>
+            })}
         </ul>
         );
-    } 
+    }
 
     renderSuggestions() {
         const { suggestions } = this.state;
@@ -51,7 +67,7 @@ export default class AutoCompleteText extends React.Component{
         }
         return (
             <ul>
-                {suggestions.map((item) => <li onClick={() => this.suggestionSelected(item)}>{item}</li>)}
+                {suggestions.map((item) => <li onClick={() => this.suggestionSelected(item)}>{this.getItemString(item)}</li>)}
             </ul>
         );
     }
