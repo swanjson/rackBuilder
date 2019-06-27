@@ -1,7 +1,5 @@
 import React from 'react';
 import './AutoCompleteText.css';
-import { VirtualTimeScheduler } from 'rxjs';
-import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
 
 export default class AutoCompleteText extends React.Component{
     constructor(props){
