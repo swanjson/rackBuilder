@@ -1,3 +1,8 @@
+To start the server
+```bash
+npm install
+npm start
+```
 
 used this tutorial: https://www.youtube.com/watch?v=NnpISZANByg&t=563s
 
