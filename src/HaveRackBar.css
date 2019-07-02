@@ -1,4 +1,4 @@
-.AutoCompleteText{
+.HaveRackBar{
     width: 100%;
     border: 1px solid grey;
     box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 2px 4px 1px rgba(0,0,0,0.18); /*Box shadow Genereated with online box shadow generator*/
@@ -7,7 +7,7 @@
     color: rgba(0,0,0,0.73);
 }
 
-.AutoCompleteText input {
+.input1 {
     width: 100%;
     border: none;
     font-family: Arial, Helvetica, sans-serif;
@@ -18,7 +18,7 @@
     outline: none; /*removes the text input blue highlighting*/
 }
 
-.AutoCompleteText ul{
+.HaveRackBar ul{
     list-style-type: none;
     text-align: left;
     margin: 0;
@@ -32,21 +32,44 @@
     margin: 0;
     padding: 0;
     background-color: rgba(119, 186, 77, 0.523);
+
 }
 
 
+.deleteButton {
+    border-radius: 50%;
+    background-color: rgba(232, 47, 15, 0.851);
+    float: right;
+}
+
+.addButton {
+    border-radius: 50%;
+    background-color: rgba(98, 232, 15, 0.851);
+    float: right;
+}
+
+.quantityTextBox{
+    float: right;
+    width: 10%;
+    text-align: center;
+    background-color: rgba(119, 186, 77, 0.523);
+    border: none;
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+}
 
 
-.AutoCompleteText ul::before{ /*allows us to remove the spacing between the input box and the ul*/
+.HaveRackBar ul::before{ /*allows us to remove the spacing between the input box and the ul*/
     content: "";
 }
 
-.AutoCompleteText li{
+.HaveRackBar li{
     padding: 10px 5px;
     cursor: pointer;
 }
 
-.AutoCompleteText li:hover{
+.HaveRackBar li:hover{
     text-decoration: underline;
     background-color: rgba(128,128,128,0.2);
 }
