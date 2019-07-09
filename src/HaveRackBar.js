@@ -11,7 +11,7 @@ export default class HaveRackBar extends React.Component{
             hrbText: '',
             hrbQuantity: 0,
         };
-    
+
     }
 
     getItemString = (item) => {
@@ -38,11 +38,12 @@ export default class HaveRackBar extends React.Component{
     }
 
     suggestionSelected(value) {
-        this.setState(() => ({
+        this.props.add(value.id);
+        /*this.setState(() => ({
             text: "",
             hrbSuggestions: [],
             hrbSelectedItems: this.state.hrbSelectedItems.concat([value]),
-        }));
+        }));*/
     }
 
     deleteItem = () => {
@@ -58,17 +59,18 @@ export default class HaveRackBar extends React.Component{
     }
 
     createNewList(){
-        const { hrbSelectedItems } = this.state;
+        // const { hrbSelectedItems } = this.state;
         const { hrbQuantity } = this.state;
-        if(hrbSelectedItems.length === 0){
+        if(this.props.rack.length === 0){
             return null;
         }
         return(
         <ul className="ul-2">
-            {hrbSelectedItems.map((value) => {
+            {this.props.rack.map((value) => {
+                // TODO: Looks up the object in CamObjects.
                 return <li key={value.id}>
                     {value.manufacturer} {value.model} {value.size} {value.color}
-                    <button className="addButton" value={hrbQuantity} onClick={() => this.addItem(value.id)}>+</button>
+                    <button className="addButton" value={hrbQuantity} onClick={() => this.add(value.id)}>+</button>
                     <input className="quantityTextBox" value={hrbQuantity} onChange={this.quanityHaveChanged} type="text" />
                     <button className="deleteButton" value={hrbQuantity} onClick={() => this.deleteItem(value.id)}>-</button>
                 </li>
