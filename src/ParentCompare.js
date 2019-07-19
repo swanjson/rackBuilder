@@ -6,43 +6,65 @@ export default class ParentCompare extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      yourRack: []
+    yourRack: [/*{id: null, quantity: null}*/]
     };
   }
-
+/* Redundant I can just use the below add
   plusOneCam = (camId) => {
     this.setState((prevState) => {
       const yourRack = prevState.yourRack;
-    //cycle through and find this right entry and increment by one
-      yourRack.forEach(item => {
-        if (item.id === camId)
-          yourRack[item].quantity += 1;
-      });
-
-
-      return {
-        yourRack
-      };
+      for (var i=0; i < yourRack.length; i++){
+        if(camId === i){
+          yourRack[i].quantity += 1;
+        }
+      }
+      return {yourRack}
     });
   }
-
+*/
 
   addCamToRack = (camId) => {
     this.setState((prevState) => {
       const yourRack = prevState.yourRack;
-      //add if then whether or not the camId is already in the array
-      yourRack.push({id: camId, quantity: 1});
+      if (yourRack.some(e => e.id === camId)) {
+        for (var i=0; i < yourRack.length; i++){
+          if(camId === i){
+          yourRack[i].quantity += 1;
+         }
+        }
+      }
+      else {
+        yourRack.push({id: camId, quantity: 1});
+      }
       return {
         yourRack
       };
     });
   }
-  //TODO: Make sure ^this^ is appending those two values to the state array 
+
+  removeCamFromRack = (camId) => {
+    this.setState((prevState) => {
+      const yourRack = prevState.yourRack;
+      if (yourRack.some(e => e.id === camId)) {
+        for (var i=0; i < yourRack.length; i++){
+          if(camId === i){
+            yourRack[i].quantity -= 1;
+          }
+          else if (camId === i && (yourRack[i].quantity) === 1){
+            yourRack.splice(i,1)
+          }
+        }
+      }
+      return {
+        yourRack
+      };
+    });
+  }
 
   render() {
     return(
     <div>
-      <HaveRackBar items={CamObjects} add={this.addCamToRack} rack={this.state.yourRack}/>
+      <HaveRackBar items={CamObjects} add={this.addCamToRack} rack={this.state.yourRack} plus={this.plusOneCam} minus={this.removeCamFromRack}/>
     </div>
     );
   }
