@@ -1,34 +1,50 @@
 import React, { Component } from 'react';
 import HaveRackBar from './HaveRackBar';
+import CamObjects from './CamObjects';
 
 export default class ParentCompare extends Component {
   constructor(props) {
     super(props);
     this.state = {
       yourRack: []
-
     };
   }
 
-  addCam = (camId) => {
+  plusOneCam = (camId) => {
     this.setState((prevState) => {
       const yourRack = prevState.yourRack;
-      const camItem = yourRack.filter(item => item.id === camId);
-      if (camItem) {
-        camItem.quantity += 1;
-      } else {
-        yourRack.push({id: camId, quantity: 1});
-      }
+    //cycle through and find this right entry and increment by one
+      yourRack.forEach(item => {
+        if (item.id === camId)
+          yourRack[item].quantity += 1;
+      });
+
+
       return {
         yourRack
       };
     });
   }
 
-  render(props)  {
-    return <div>
-      <HaveRackBar add={this.addCam} rack={this.state.yourRack} />
+
+  addCamToRack = (camId) => {
+    this.setState((prevState) => {
+      const yourRack = prevState.yourRack;
+      //add if then whether or not the camId is already in the array
+      yourRack.push({id: camId, quantity: 1});
+      return {
+        yourRack
+      };
+    });
+  }
+  //TODO: Make sure ^this^ is appending those two values to the state array 
+
+  render() {
+    return(
+    <div>
+      <HaveRackBar items={CamObjects} add={this.addCamToRack} rack={this.state.yourRack}/>
     </div>
+    );
   }
 }
 

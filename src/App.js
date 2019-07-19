@@ -4,7 +4,7 @@ import AutocompleteSearchFill from './AutoCompleteSearchFill'
 import CamNames from './CamNames';
 import CamObjects from './CamObjects';
 import YellowHighlightAddSearch from './YellowHighlightAddSearch';
-import HaveRackBar from './HaveRackBar';
+import ParentCompare from './ParentCompare';
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
           {/* <HideableText text="Dynamic Text" /> */}
           <p>Your rack:</p>
           <br></br>
-          <HaveRackBar items={CamObjects} />
+          <ParentCompare items={CamObjects}/>
           <br></br>
           <p>Pieces Required :</p>
           <br></br>
