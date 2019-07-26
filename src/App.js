@@ -11,7 +11,6 @@ function App() {
     <div className="App">
       <div className="App-Component">
         <div className="App-Component">
-          {/* <HideableText text="Dynamic Text" /> */}
           <p>Your rack:</p>
           <br></br>
           <ParentCompare items={CamObjects}/>

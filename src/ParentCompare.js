@@ -6,36 +6,24 @@ export default class ParentCompare extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    yourRack: [/*{id: null, quantity: null}*/]
+    yourRack: []
     };
   }
-/* Redundant I can just use the below add
-  plusOneCam = (camId) => {
-    this.setState((prevState) => {
-      const yourRack = prevState.yourRack;
-      for (var i=0; i < yourRack.length; i++){
-        if(camId === i){
-          yourRack[i].quantity += 1;
-        }
-      }
-      return {yourRack}
-    });
-  }
-*/
 
   addCamToRack = (camId) => {
     this.setState((prevState) => {
       const yourRack = prevState.yourRack;
-      if (yourRack.some(e => e.id === camId)) {
-        for (var i=0; i < yourRack.length; i++){
-          if(camId === i){
-          yourRack[i].quantity += 1;
+      const gearBool = yourRack.some(e => e.id === camId);
+      if(gearBool){
+        for (var j = 0; j < yourRack.length; j++)
+          if (yourRack[j].id === camId)
+            yourRack[j].quantity += 1;
+            //console.log("index: "+i,"quantity: "+yourRack[i].quantity)
          }
-        }
-      }
       else {
         yourRack.push({id: camId, quantity: 1});
       }
+      console.log(yourRack)
       return {
         yourRack
       };
@@ -45,16 +33,18 @@ export default class ParentCompare extends Component {
   removeCamFromRack = (camId) => {
     this.setState((prevState) => {
       const yourRack = prevState.yourRack;
-      if (yourRack.some(e => e.id === camId)) {
-        for (var i=0; i < yourRack.length; i++){
-          if(camId === i){
-            yourRack[i].quantity -= 1;
-          }
-          else if (camId === i && (yourRack[i].quantity) === 1){
-            yourRack.splice(i,1)
-          }
+      const gearBool = yourRack.some(e => e.id === camId);
+      if(gearBool){
+        for (var j = 0; j < yourRack.length; j++)
+          if (yourRack[j].id === camId)
+            if ((yourRack[j].quantity) === 1){
+              alert("Just deleted the cam from the list!") //change to which cam or an "are you sure?" dialogue
+              yourRack.splice(j,1)
+            }
+            else {
+              yourRack[j].quantity -= 1;
+            }
         }
-      }
       return {
         yourRack
       };

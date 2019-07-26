@@ -32,7 +32,7 @@ export default class HaveRackBar extends React.Component{
             //do another loop and search through and change the quantity to whatever was entered
             
         //)
-        console.log(value.id, value.quantity)
+        //console.log(value.id, value.quantity)
     }
 
     getItemString = (item) => {
@@ -48,9 +48,10 @@ export default class HaveRackBar extends React.Component{
             {this.props.rack.map((value) => {
                 return <li key={value.id.toString()}>
                     {this.getItemString(CamObjects[value.id])}
-                    <button className="addButton" value={value.quantity} onClick={() => this.suggestionSelected(value)}>+</button>
+                    <button className="addButton" onClick={() => this.suggestionSelected(value)}>+</button>
                     <input className="quantityTextBox" value={value.quantity} onChange={this.onNumberChanged(value)} type="text" />
-                    <button className="deleteButton" value={value.quantity} onClick={() => this.props.minus(value.id)}>-</button>
+                    <button className="deleteButton" onClick={() => this.props.minus(value.id)}>-</button>
+                    {/*console.log("id:"+value.id,", quantity:"+value.quantity )*/}
                 </li>
             })}
         </ul>
@@ -73,7 +74,7 @@ export default class HaveRackBar extends React.Component{
    suggestionSelected(value) {
     this.setState(() => ({
         hrbSuggestions: [],
-        text: "",
+        hrbText: "",
     }))
     this.props.add(value.id);
 }
