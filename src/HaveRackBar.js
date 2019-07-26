@@ -1,23 +1,17 @@
 import React from 'react';
 import './HaveRackBar.css';
-
+import CamObjects from './CamObjects';
 
 export default class HaveRackBar extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            hrbSelectedItems: [],
             hrbSuggestions: [],
             hrbText: '',
             hrbQuantity: 0,
         };
-    
+        // PASSED FROM PARENT COMPARE <HaveRackBar add={this.addCam} rack={this.state.yourRack} />
     }
-
-    getItemString = (item) => {
-        return `${item.manufacturer} ${item.model} ${item.size} ${item.color}`;
-    }
-
     onTextChanged = (e) => {
         const { items } = this.props;
         const value = e.target.value;
@@ -32,50 +26,38 @@ export default class HaveRackBar extends React.Component{
         this.setState(() => ({hrbSuggestions, hrbText: value}));
     }
 
-    quanityHaveChanged = (e) => {
-        const value = e.target.value;
-        this.setState(() => ({hrbQuantity: value}));
+    onNumberChanged = (value) => {
+        //this.setState(() =>
+
+            //do another loop and search through and change the quantity to whatever was entered
+            
+        //)
+        //console.log(value.id, value.quantity)
     }
 
-    suggestionSelected(value) {
-        this.setState(() => ({
-            text: "",
-            hrbSuggestions: [],
-            hrbSelectedItems: this.state.hrbSelectedItems.concat([value]),
-        }));
-    }
-
-    deleteItem = () => {
-        this.setState((state) => ({
-            hrbQuantity: (state.hrbQuantity - 1)
-        }));
-    }
-
-    addItem = () => {
-        this.setState((state) => ({
-            hrbQuantity: state.hrbQuantity + 1
-        }));
+    getItemString = (item) => {
+        return `${item.manufacturer} ${item.model} ${item.size} ${item.color}`;
     }
 
     createNewList(){
-        const { hrbSelectedItems } = this.state;
-        const { hrbQuantity } = this.state;
-        if(hrbSelectedItems.length === 0){
+        if(this.props.rack.length === 0){
             return null;
         }
         return(
         <ul className="ul-2">
-            {hrbSelectedItems.map((value) => {
-                return <li key={value.id}>
-                    {value.manufacturer} {value.model} {value.size} {value.color}
-                    <button className="addButton" value={hrbQuantity} onClick={() => this.addItem(value.id)}>+</button>
-                    <input className="quantityTextBox" value={hrbQuantity} onChange={this.quanityHaveChanged} type="text" />
-                    <button className="deleteButton" value={hrbQuantity} onClick={() => this.deleteItem(value.id)}>-</button>
+            {this.props.rack.map((value) => {
+                return <li key={value.id.toString()}>
+                    {this.getItemString(CamObjects[value.id])}
+                    <button className="addButton" onClick={() => this.suggestionSelected(value)}>+</button>
+                    <input className="quantityTextBox" value={value.quantity} onChange={this.onNumberChanged(value)} type="text" />
+                    <button className="deleteButton" onClick={() => this.props.minus(value.id)}>-</button>
+                    {/*console.log("id:"+value.id,", quantity:"+value.quantity )*/}
                 </li>
             })}
         </ul>
         );
     }
+
 
     renderSuggestions() {
         const { hrbSuggestions } = this.state;
@@ -88,6 +70,14 @@ export default class HaveRackBar extends React.Component{
             </ul>
         );
     }
+
+   suggestionSelected(value) {
+    this.setState(() => ({
+        hrbSuggestions: [],
+        hrbText: "",
+    }))
+    this.props.add(value.id);
+}
 
     render() {
         const { hrbText } = this.state;
