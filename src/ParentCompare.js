@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
-import HaveRackBar from './HaveRackBar';
 import CamObjects from './CamObjects';
+import HaveRackBar from './HaveRackBar';
+import RackNeededBar from './RackNeededBar';
 
 export default class ParentCompare extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    yourRack: []
+    yourRack: [],
+    rackNeeded: []
     };
   }
 
-  addCamToRack = (camId) => {
+  addCamToHaveRack = (camId) => {
     this.setState((prevState) => {
       const yourRack = prevState.yourRack;
       const gearBool = yourRack.some(e => e.id === camId);
@@ -18,12 +20,10 @@ export default class ParentCompare extends Component {
         for (var j = 0; j < yourRack.length; j++)
           if (yourRack[j].id === camId)
             yourRack[j].quantity += 1;
-            //console.log("index: "+i,"quantity: "+yourRack[i].quantity)
          }
       else {
         yourRack.push({id: camId, quantity: 1});
       }
-      console.log(yourRack)
       return {
         yourRack
       };
@@ -51,10 +51,56 @@ export default class ParentCompare extends Component {
     });
   }
 
+
+  addCamToRackNeeded = (camId) => {
+    this.setState((prevState) => {
+      const rackNeeded = prevState.rackNeeded;
+      const gearBool = rackNeeded.some(e => e.id === camId);
+      if(gearBool){
+        for (var j = 0; j < rackNeeded.length; j++)
+          if (rackNeeded[j].id === camId)
+            rackNeeded[j].quantity += 1;
+         }
+      else {
+        rackNeeded.push({id: camId, quantity: 1});
+      }
+      return {
+        rackNeeded
+      };
+    });
+  }
+
+
+  removeCamFromRackNeeded = (camId) => {
+    this.setState((prevState) => {
+      const rackNeeded = prevState.rackNeeded;
+      const gearBool = rackNeeded.some(e => e.id === camId);
+      if(gearBool){
+        for (var j = 0; j < rackNeeded.length; j++)
+          if (rackNeeded[j].id === camId)
+            if ((rackNeeded[j].quantity) === 1){
+              alert("Just deleted the cam from the list!") //change to which cam or an "are you sure?" dialogue
+              rackNeeded.splice(j,1)
+            }
+            else {
+              rackNeeded[j].quantity -= 1;
+            }
+        }
+      return {
+        rackNeeded
+      };
+    });
+  }
+
   render() {
     return(
     <div>
-      <HaveRackBar items={CamObjects} add={this.addCamToRack} rack={this.state.yourRack} plus={this.plusOneCam} minus={this.removeCamFromRack}/>
+      <p>Your rack:</p>
+      <br></br>
+      <HaveRackBar items={CamObjects} add2Have={this.addCamToHaveRack} rackHave={this.state.yourRack} minusHave={this.removeCamFromHaveRack}/>
+      <p>Required Rack:</p>
+      <br></br>
+      <RackNeededBar items={CamObjects} addNeed={this.addCamToRackNeeded} rackNeed={this.state.rackNeeded} minusNeed={this.removeCamFromRackNeeded}/>
     </div>
     );
   }
