@@ -8,10 +8,13 @@ export default class ParentCompare extends Component {
     super(props);
     this.state = {
     yourRack: [],
-    rackNeeded: []
+    rackNeeded: [],
+    bringRack: [],
+    borrowRack: [],
     };
   }
 
+/*FOR HAVE RACK*/
   addCamToHaveRack = (camId) => {
     this.setState((prevState) => {
       const yourRack = prevState.yourRack;
@@ -30,6 +33,7 @@ export default class ParentCompare extends Component {
     });
   }
 
+/*FOR HAVE RACK*/
   removeCamFromRack = (camId) => {
     this.setState((prevState) => {
       const yourRack = prevState.yourRack;
@@ -51,7 +55,7 @@ export default class ParentCompare extends Component {
     });
   }
 
-
+/*FOR RACK NEEDED*/
   addCamToRackNeeded = (camId) => {
     this.setState((prevState) => {
       const rackNeeded = prevState.rackNeeded;
@@ -70,7 +74,7 @@ export default class ParentCompare extends Component {
     });
   }
 
-
+/*FOR RACK NEEDED*/
   removeCamFromRackNeeded = (camId) => {
     this.setState((prevState) => {
       const rackNeeded = prevState.rackNeeded;
@@ -92,6 +96,61 @@ export default class ParentCompare extends Component {
     });
   }
 
+
+  getItemString = (item) => {
+    return `${item.manufacturer} ${item.model} ${item.size} ${item.color}`;
+  }
+
+  compareRackArrays = () => {
+    this.setState((prevState) => { 
+      const rackNeeded = prevState.rackNeeded;
+      const yourRack = prevState.yourRack;
+      const bringRack = prevState.bringRack;
+      for (var i = 0; i < rackNeeded.length; i++){
+        for (var j = 0; j < yourRack.length; j++){}
+          if (yourRack[i].id === rackNeeded[j].id){
+            if (yourRack[i].quantity === rackNeeded[j].quantity){
+              bringRack.push({id: yourRack[i].id, quantity: yourRack[i].quantity});
+            }
+          }
+        }
+      }
+    )}
+  
+
+
+
+
+  createBringList = () => {
+    if( this.props.bringRack.length === 0){
+      return null;
+    }
+    return(
+    <ul className="bring-ul-2">
+      {this.props.bringRack.map((value) => {
+        return <li key={value.id.toString()}>
+          {this.getItemString(CamObjects[value.id])}
+        </li>
+      })}
+    </ul>
+    )
+  }
+
+  createBorrowList = () => {
+    if( this.props.borrowRack.length === 0){
+      return null;
+    }
+    return(
+    <ul className="borrow-ul-2">
+      {this.props.borrowRack.map((value) => {
+        return <li key={value.id.toString()}>
+          {this.getItemString(CamObjects[value.id])}
+        </li>
+      })}
+    </ul>
+    )
+  }
+
   render() {
     return(
     <div>
@@ -101,6 +160,14 @@ export default class ParentCompare extends Component {
       <p>Required Rack:</p>
       <br></br>
       <RackNeededBar items={CamObjects} addNeed={this.addCamToRackNeeded} rackNeed={this.state.rackNeeded} minusNeed={this.removeCamFromRackNeeded}/>
+      {this.compareRackArrays()}
+      <p>Bring:</p>
+      <br></br>
+      {this.createBringList()}
+      <p>Borrow/Buy:</p>
+      {this.createBringList()}
+      <br></br>
+
     </div>
     );
   }

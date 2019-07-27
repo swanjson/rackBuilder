@@ -11,9 +11,6 @@ function App() {
       <div className="App-Component">
         <div className="App-Component">
           <ParentCompare items={CamObjects}/>
-          <p>Pieces To Get :</p>
-          <br></br>
-          <AutocompleteSearchFill items={CamNames}/>
         </div>
       </div>
     </div>
