@@ -120,9 +120,10 @@ export default class ParentCompare extends Component {
 
 
 
-
+      /*
   createBringList = () => {
-    if( this.props.bringRack.length === 0){
+    const { bringRack }= this.state;
+    if( this.bringRack.length === 0){
       return null;
     }
     return(
@@ -150,6 +151,7 @@ export default class ParentCompare extends Component {
     </ul>
     )
   }
+  */
 
   render() {
     return(
@@ -163,9 +165,9 @@ export default class ParentCompare extends Component {
       {this.compareRackArrays()}
       <p>Bring:</p>
       <br></br>
-      {this.createBringList()}
+      {/*this.createBringList()*/}
       <p>Borrow/Buy:</p>
-      {this.createBringList()}
+      {/*this.createBringList()*/}
       <br></br>
 
     </div>

@@ -1,7 +1,5 @@
 import React from 'react';
 import './App.css';
-import AutocompleteSearchFill from './AutoCompleteSearchFill'
-import CamNames from './CamNames';
 import CamObjects from './CamObjects';
 import ParentCompare from './ParentCompare';
 
