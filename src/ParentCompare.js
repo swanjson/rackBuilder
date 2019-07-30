@@ -34,7 +34,7 @@ export default class ParentCompare extends Component {
   }
 
 /*FOR HAVE RACK*/
-  removeCamFromRack = (camId) => {
+  removeCamFromHaveRack = (camId) => {
     this.setState((prevState) => {
       const yourRack = prevState.yourRack;
       const gearBool = yourRack.some(e => e.id === camId);
