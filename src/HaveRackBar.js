@@ -83,7 +83,7 @@ export default class HaveRackBar extends React.Component{
         const { hrbText } = this.state;
         return(
                 <div className="HaveRackBar">
-                    <input className="input1" value={hrbText} onChange={this.onTextChanged} type="text" />
+                    <input className="input1" placeholder={"Start typing the name of the protection you have in your rack..."} value={hrbText} onChange={this.onTextChanged} type="text" />
                     {this.renderSuggestions()}
                     {this.createNewList()}
                 </div>

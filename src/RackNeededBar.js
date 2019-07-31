@@ -82,7 +82,7 @@ export default class RackNeededBar extends React.Component{
         const { rnbText } = this.state;
         return(
                 <div className="RackNeededBar">
-                    <input className="input1" value={rnbText} onChange={this.onTextChanged} type="text" />
+                    <input className="input1" placeholder={"Start typing the name of the protection you need for your climb..."}value={rnbText} onChange={this.onTextChanged} type="text" />
                     {this.renderSuggestions()}
                     {this.createNewList()}
                 </div>

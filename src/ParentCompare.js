@@ -100,7 +100,7 @@ export default class ParentCompare extends Component {
   getItemString = (item) => {
     return `${item.manufacturer} ${item.model} ${item.size} ${item.color}`;
   }
-
+/*
   compareRackArrays = () => {
     this.setState((prevState) => { 
       const rackNeeded = prevState.rackNeeded;
@@ -120,7 +120,7 @@ export default class ParentCompare extends Component {
 
 
 
-      /*
+  
   createBringList = () => {
     const { bringRack }= this.state;
     if( this.bringRack.length === 0){
@@ -162,7 +162,7 @@ export default class ParentCompare extends Component {
       <p>Required Rack:</p>
       <br></br>
       <RackNeededBar items={CamObjects} addNeed={this.addCamToRackNeeded} rackNeed={this.state.rackNeeded} minusNeed={this.removeCamFromRackNeeded}/>
-      {this.compareRackArrays()}
+      {/*this.compareRackArrays()*/}
       <p>Bring:</p>
       <br></br>
       {/*this.createBringList()*/}
