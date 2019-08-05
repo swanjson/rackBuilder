@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import CamObjects from './CamObjects';
 import ParentCompare from './ParentCompare';
-import CamManip from './CamManip';
 
 function App() {
   return (
