@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import CamObjects from './CamObjects';
 import HaveRackBar from './HaveRackBar';
 import RackNeededBar from './RackNeededBar';
+import similarCamData from './CamManip';
+
+
+console.log(similarCamData[0].sim2Ids);
 
 export default class ParentCompare extends Component {
   constructor(props) {

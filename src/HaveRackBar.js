@@ -66,7 +66,7 @@ export default class HaveRackBar extends React.Component{
         }
         return (
             <ul>
-                {hrbSuggestions.map((item) => <li onClick={() => this.suggestionSelected(item)}>{this.getItemString(item)}</li>)}
+                {hrbSuggestions.map((item) => <li key={item.id.toString()} onClick={() => this.suggestionSelected(item)}>{this.getItemString(item)}</li>)}
             </ul>
         );
     }

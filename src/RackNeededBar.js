@@ -65,7 +65,7 @@ export default class RackNeededBar extends React.Component{
         }
         return (
             <ul>
-                {rnbSuggestions.map((item) => <li onClick={() => this.suggestionSelected(item)}>{this.getItemString(item)}</li>)}
+                {rnbSuggestions.map((item) => <li key={item.id.toString()} onClick={() => this.suggestionSelected(item)}>{this.getItemString(item)}</li>)}
             </ul>
         );
     }
