@@ -1,4 +1,4 @@
-.HaveRackBar{
+.RackNeededBar{
     width: 100%;
     border: 1px solid grey;
     box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 2px 4px 1px rgba(0,0,0,0.18); /*Box shadow Genereated with online box shadow generator*/
@@ -18,7 +18,7 @@
     outline: none; /*removes the text input blue highlighting*/
 }
 
-.HaveRackBar ul{
+.RackNeededBar ul{
     list-style-type: none;
     text-align: left;
     margin: 0;
@@ -26,12 +26,12 @@
     border-top: 1px solid grey;
 }
 
-.rhul-2{
+.rnul-2{
     list-style-type: none;
     text-align: left;
     margin: 0;
     padding: 0;
-    background-color: rgba(119, 186, 77, 0.523);
+    background-color: rgba(201, 196, 59, 0.523);
 
 }
 
@@ -48,11 +48,11 @@
     float: right;
 }
 
-.hrquantityTextBox{
+.rnquantityTextBox{
     float: right;
     width: 10%;
     text-align: center;
-    background-color: rgba(119, 186, 77, 0.523);
+    background-color: rgba(201, 196, 59, 0.523);
     border: none;
     font-size: 18px;
     margin: 0;
@@ -60,16 +60,16 @@
 }
 
 
-.HaveRackBar ul::before{ /*allows us to remove the spacing between the input box and the ul*/
+.RackNeededBar ul::before{ /*allows us to remove the spacing between the input box and the ul*/
     content: "";
 }
 
-.HaveRackBar li{
+.RackNeededBar li{
     padding: 10px 5px;
     cursor: pointer;
 }
 
-.HaveRackBar li:hover{
+.RackNeededBar li:hover{
     text-decoration: underline;
     background-color: rgba(128,128,128,0.2);
 }
