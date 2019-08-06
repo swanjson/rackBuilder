@@ -3,8 +3,19 @@
     text-align: left;
     margin: 0;
     padding: 0;
-    background-color: rgba(200, 196, 100, 0.523);
+    background-color: rgba(197, 58, 174, 0.523);
 
+}
+
+.borrowQuantityTextBox{
+    float: right;
+    width: 10%;
+    text-align: center;
+    background-color: rgba(197, 58, 174, 0.523);
+    border: none;
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
 }
 
 .bring-ul-2{
@@ -12,6 +23,17 @@
     text-align: left;
     margin: 0;
     padding: 0;
-    background-color: rgba(200, 196, 100, 0.523);
+    background-color: rgba(51, 53, 185, 0.596);
 
+}
+
+.bringQuantityTextBox{
+    float: right;
+    width: 10%;
+    text-align: center;
+    background-color: rgba(51, 53, 185, 0.596);
+    border: none;
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
 }
