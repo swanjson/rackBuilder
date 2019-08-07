@@ -33,6 +33,7 @@ for (var i = 0; i < camTemps.length; i++){
   similarCamData[i].sim2Ids.sort(function(a, b) { return b.overlapPercent - a.overlapPercent; }); //SORTS SIM2IDS BY PERCENTAGE
 }
 
+export default similarCamData;
 
 
 /*      PRINT THE NUMBER OF SIMILAR ID OBJECTS
@@ -48,6 +49,6 @@ for (var i = 0; i < camTemps.length; i++){
 //console.log(similarCamData);
 //console.log(similarCamData[0].sim2Ids)
 
-export default similarCamData;
+
 
 

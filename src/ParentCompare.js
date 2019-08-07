@@ -52,6 +52,7 @@ export default class ParentCompare extends Component {
         }
       return {yourRack};
     });
+    this.addToHaveCompare(camId);
   }
 
 /*FOR RACK NEEDED*/
@@ -66,13 +67,14 @@ export default class ParentCompare extends Component {
       return {rackNeeded};
     });
     //this.bringBorrowSearch(camId);
+    this.addToHaveCompare(camId);
   }
 
 /*FOR RACK NEEDED*/
   removeCamFromRackNeeded = (camId) => {
     this.setState((prevState) => {
       const rackNeeded = prevState.rackNeeded;
-      const gearBool = rackNeeded.some(e => e.id === camId);
+      const gearBool = rackNeeded.find(e => e.id === camId);
       if(gearBool){
         for (var j = 0; j < rackNeeded.length; j++)
           if (gearBool.id === camId)
@@ -86,6 +88,7 @@ export default class ParentCompare extends Component {
         }
       return {rackNeeded};
     });
+    this.addToHaveCompare(camId);
   }
 
 
@@ -93,10 +96,12 @@ export default class ParentCompare extends Component {
     return `${item.manufacturer} ${item.model} ${item.size} ${item.color}`;
   }
 
+
+  //FIGURE OUT EMPTY ARRAY CASES
   addToHaveCompare = (camId) => { //if called from add function that must mean there's at least one in the have rack.
     this.setState((prevState) => {
       const bringRack = prevState.bringRack;
-      const borrowRack = prevState.bringRack;
+      const borrowRack = prevState.borrowRack;
       const rackNeeded = prevState.rackNeeded;
       const yourRack = prevState.yourRack;
       const inNeed = rackNeeded.find(e => e.id === camId);
@@ -104,20 +109,60 @@ export default class ParentCompare extends Component {
       console.log(inNeed);
       //console.log(inHave);
       if (inNeed){ //It is in needed. I need to see the quantity in needed and compare to how many I have and reset it everytime.
-        if (inNeed.quantity >= inHave.quantity){
+        if(!inHave){
+          const borrowBool = borrowRack.find(e => e.id === camId);
+          if(borrowBool)
+            borrowBool.quantity = inNeed.quantity;
+          else
+            borrowRack.push({id: camId, quantity: inNeed.quantity});
+        }
+        else if (inNeed.quantity >= inHave.quantity){
           const needHaveDifference = (inNeed.quantity - inHave.quantity);
           if (needHaveDifference > 0){
             console.log(needHaveDifference);
-            bringRack.push({id: camId, quantity: inHave.quantity});
-            borrowRack.push({id: camId, quantity: needHaveDifference});
-            
+            const gearBool = bringRack.find(e => e.id === camId);
+            if(gearBool)
+              gearBool.quantity = inHave.quantity;
+            else
+              bringRack.push({id: camId, quantity: inHave.quantity});
+              //Change borrow rack
+              const borrowBool = borrowRack.find(e => e.id === camId);
+              if(borrowBool)
+                borrowBool.quantity = needHaveDifference;
+              else
+                borrowRack.push({id: camId, quantity: needHaveDifference});
+                
           }
           else if( needHaveDifference === 0){
-            bringRack.push({id: camId, quantity: inHave.quantity});
+            const gearBool = bringRack.find(e => e.id === camId);
+            if(gearBool)
+              gearBool.quantity = inHave.quantity;
+            else
+              bringRack.push({id: camId, quantity: inHave.quantity});
+            const borrowBool = borrowRack.find(e => e.id === camId);
+            if(borrowBool){
+              for (var j = 0; j < borrowRack.length; j++)
+                if (borrowBool.id === camId)
+                  if (((borrowBool.quantity) === 1) || ((borrowBool.quantity) === 0)){
+                    borrowRack.splice(j,1)
+                  }
+              }
           }
         }
         else/*(inNeed.quantity < inHave.quantity)*/{
-          bringRack.push({id: camId, quantity: inNeed.quantity});
+          const gearBool = bringRack.find(e => e.id === camId);
+            if(gearBool)
+              gearBool.quantity = inNeed.quantity;
+            else
+              bringRack.push({id: camId, quantity: inNeed.quantity});
+          const borrowBool = borrowRack.find(e => e.id === camId);
+          if(borrowBool){
+            for (var k = 0; k < borrowRack.length; k++)
+              if (borrowBool.id === camId)
+                if (((borrowBool.quantity) === 1) || ((borrowBool.quantity) === 0)){
+                  borrowRack.splice(j,1)
+                }
+            }
         }
         console.log(bringRack);
       }
@@ -198,7 +243,7 @@ export default class ParentCompare extends Component {
 
 
   generateLists = () => {
-    this.createNewBorrowList();
+    return this.createNewBorrowList();
   }
 
 
