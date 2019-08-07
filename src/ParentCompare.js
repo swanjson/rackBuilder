@@ -173,42 +173,6 @@ export default class ParentCompare extends Component {
     })
   }
 
-
-
-
-/*
-  bringBorrowSearch = (camId) => {
-    const { bringRack } = this.state;
-    const { borrowRack } = this.state;
-    this.setState((prevState) => {
-      //const rackNeeded = prevState.rackNeeded;
-      const bringRack = prevState.bringRack;
-      const borrowRack = prevState.bringRack;
-      const yourRack = prevState.yourRack;
-      const foundInHaveRack = yourRack.find(e => e.id === camId);
-      if (foundInHaveRack){
-        const foundInBringRack = bringRack.find(e => e.id === camId);
-        if (foundInBringRack){
-          for (var j = 0; j < bringRack.length; j++){
-            if (bringRack[j].id === camId){
-              bringRack[j].quantity += 1;
-            }
-          }
-        }
-        else {
-          bringRack.push({id: camId, quantity: 1});
-        }
-      }
-      else {
-        borrowRack.push({id: camId, quantity: 1});
-      }
-    })
-    console.log(bringRack);
-    console.log(borrowRack);
-  }
-*/
-
-
   createNewBringList(){
     if(this.state.bringRack.length === 0){
         return null;
