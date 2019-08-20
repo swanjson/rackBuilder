@@ -20,6 +20,10 @@ export default class ParentCompare extends Component {
     };
   }
 
+  getItemString = (item) => {
+    return `${item.manufacturer} ${item.model} ${item.size} ${item.color}`;
+}
+
 /*FOR HAVE RACK*/
   addCamToHaveRack = (camId) => {
     this.setState((prevState) => {
@@ -31,7 +35,7 @@ export default class ParentCompare extends Component {
         yourRack.push({id: camId, quantity: 1});
       return{yourRack};
     });
-    this.addToHaveCompare(camId);
+    this.bringBorrowCompare(camId);
   }
 
 /*FOR HAVE RACK*/
@@ -40,19 +44,22 @@ export default class ParentCompare extends Component {
       const yourRack = prevState.yourRack;
       const gearBool = yourRack.find(e => e.id === camId);
       if(gearBool){
-        for (var j = 0; j < yourRack.length; j++)
-          if (gearBool.id === camId)
+        for (var i = 0; i < yourRack.length; i++)
+          if (gearBool.id === camId){
             if ((gearBool.quantity) === 1){
               alert("Just deleted the cam from the list!") //change to which cam or an "are you sure?" dialogue
-              yourRack.splice(j,1)
+              yourRack.splice(i,1)
             }
             else {
-              gearBool.quantity -= 1;
+              console.log("this is the quantity: ", gearBool.quantity)
+              gearBool.quantity = gearBool.quantity - 1;
+              console.log("this is the quantity: ", gearBool.quantity)
             }
+          }
         }
       return {yourRack};
     });
-    this.addToHaveCompare(camId);
+    this.bringBorrowCompare(camId);
   }
 
 /*FOR RACK NEEDED*/
@@ -67,7 +74,7 @@ export default class ParentCompare extends Component {
       return {rackNeeded};
     });
     //this.bringBorrowSearch(camId);
-    this.addToHaveCompare(camId);
+    this.bringBorrowCompare(camId);
   }
 
 /*FOR RACK NEEDED*/
@@ -88,17 +95,15 @@ export default class ParentCompare extends Component {
         }
       return {rackNeeded};
     });
-    this.addToHaveCompare(camId);
+    this.bringBorrowCompare(camId);
   }
 
 
-  getItemString = (item) => {
-    return `${item.manufacturer} ${item.model} ${item.size} ${item.color}`;
-  }
+
 
 
   //FIGURE OUT EMPTY ARRAY CASES
-  addToHaveCompare = (camId) => { //if called from add function that must mean there's at least one in the have rack.
+  bringBorrowCompare = (camId) => { //if called from add function that must mean there's at least one in the have rack.
     this.setState((prevState) => {
       const bringRack = prevState.bringRack;
       const borrowRack = prevState.borrowRack;
@@ -180,7 +185,7 @@ export default class ParentCompare extends Component {
     return(
     <ul className="bring-ul-2">
         {this.state.bringRack.map((value) => {
-            return <li key={"value.id.toString() + a"}>
+            return <li key={value.id.toString()}>
                 {this.getItemString(CamObjects[value.id])}
                 <input className="bringQuantityTextBox" value={value.quantity} type="text" />
             </li>
@@ -196,7 +201,7 @@ export default class ParentCompare extends Component {
     return(
     <ul className="borrow-ul-2">
         {this.state.borrowRack.map((value) => {
-            return <li key={"value.id.toString() + b"}>
+            return <li key={value.id.toString()}>
                 {this.getItemString(CamObjects[value.id])}
                 <input className="borrowQuantityTextBox" value={value.quantity} type="text" />
             </li>
@@ -204,13 +209,6 @@ export default class ParentCompare extends Component {
     </ul>
     );
   }
-
-
-  generateLists = () => {
-    return this.createNewBorrowList();
-  }
-
-
 
   render() {
     return(
@@ -225,7 +223,7 @@ export default class ParentCompare extends Component {
       <br></br>
       {this.createNewBringList()}
       <p>Borrow/Buy:</p>
-      {this.generateLists()}
+      {this.createNewBorrowList()}
       <br></br>
 
     </div>

@@ -31,6 +31,8 @@ export default class HaveRackBar extends React.Component{
         return `${item.manufacturer} ${item.model} ${item.size} ${item.color}`;
     }
 
+    numberChansged
+
     createNewList(){
         if(this.props.rackHave.length === 0){
             return null;
@@ -43,7 +45,6 @@ export default class HaveRackBar extends React.Component{
                     <button className="addButton" onClick={() => this.suggestionSelected(value)}>+</button>
                     <input className="hrquantityTextBox" value={value.quantity} type="text" />
                     <button className="deleteButton" onClick={() => this.props.minusHave(value.id)}>-</button>
-                    {/*console.log("id:"+value.id,", quantity:"+value.quantity )*/}
                 </li>
             })}
         </ul>
