@@ -108,12 +108,12 @@ export default class ParentCompare extends Component {
       const inHave = yourRack.find(e => e.id === camId);
       if (inNeed){ //It is in needed. I need to see the quantity in needed and compare to how many I have and reset it everytime.
         if(!inHave){
-          const borrowBool = borrowRack.find(e => e.id === camId);
           const bringBool = bringRack.find(e => e.id === camId);
           const brBIndex = bringRack.indexOf(bringBool);
           if(bringBool)
             if (bringBool.id === camId)
-              bringRack.splice(brBIndex,1);
+              bringRack.splice(brBIndex,1); //REMOVES CAM FROM BRING RACK IF HAVE RACK QUANTITY GOES TO ZERO
+          const borrowBool = borrowRack.find(e => e.id === camId);
           if(borrowBool)
             borrowBool.quantity = inNeed.quantity;
           else
@@ -175,8 +175,12 @@ export default class ParentCompare extends Component {
           }
         }
       }
-      else { 
-        //DO NOTHING BECAUSE IT'S JUST BUILDING YOUR RACK AND IT'S NOT NEEDED YET
+      else { //REMOVES CAM FROM BORROW WHEN REMOVED FROM NEED RACK
+        const borrowBool = borrowRack.find(e => e.id === camId);
+        const bbIndex = borrowRack.indexOf(borrowBool);
+        if(borrowBool)
+          if((borrowBool.quantity) === 0 || ((borrowBool.quantity) === 1))   //Might just need to be zero
+            borrowRack.splice(bbIndex,1);
       }
       return {bringRack, borrowRack};
     })
