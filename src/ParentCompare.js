@@ -43,17 +43,15 @@ export default class ParentCompare extends Component {
     this.setState((prevState) => {
       const yourRack = prevState.yourRack;
       const gearBool = yourRack.find(e => e.id === camId);
+      const foundIndex = yourRack.indexOf(gearBool);
       if(gearBool){
-        for (var i = 0; i < yourRack.length; i++)
           if (gearBool.id === camId){
             if ((gearBool.quantity) === 1){
               alert("Just deleted the cam from the list!") //change to which cam or an "are you sure?" dialogue
-              yourRack.splice(i,1)
+              yourRack.splice(foundIndex,1)
             }
             else {
-              console.log("this is the quantity: ", gearBool.quantity)
               gearBool.quantity = gearBool.quantity - 1;
-              console.log("this is the quantity: ", gearBool.quantity)
             }
           }
         }
@@ -82,12 +80,12 @@ export default class ParentCompare extends Component {
     this.setState((prevState) => {
       const rackNeeded = prevState.rackNeeded;
       const gearBool = rackNeeded.find(e => e.id === camId);
+      const foundIndex = rackNeeded.indexOf(gearBool);
       if(gearBool){
-        for (var j = 0; j < rackNeeded.length; j++)
           if (gearBool.id === camId)
             if ((gearBool.quantity) === 1){
               alert("Just deleted the cam from the list!") //change to which cam or an "are you sure?" dialogue
-              rackNeeded.splice(j,1)
+              rackNeeded.splice(foundIndex,1)
             }
             else {
               gearBool.quantity -= 1;
@@ -99,11 +97,8 @@ export default class ParentCompare extends Component {
   }
 
 
-
-
-
   //FIGURE OUT EMPTY ARRAY CASES
-  bringBorrowCompare = (camId) => { //if called from add function that must mean there's at least one in the have rack.
+  bringBorrowCompare = (camId) => { //if called from all change functions that must mean there's at least one in the have rack.
     this.setState((prevState) => {
       const bringRack = prevState.bringRack;
       const borrowRack = prevState.borrowRack;
@@ -111,11 +106,14 @@ export default class ParentCompare extends Component {
       const yourRack = prevState.yourRack;
       const inNeed = rackNeeded.find(e => e.id === camId);
       const inHave = yourRack.find(e => e.id === camId);
-      console.log(inNeed);
-      //console.log(inHave);
       if (inNeed){ //It is in needed. I need to see the quantity in needed and compare to how many I have and reset it everytime.
         if(!inHave){
           const borrowBool = borrowRack.find(e => e.id === camId);
+          const bringBool = bringRack.find(e => e.id === camId);
+          const brBIndex = bringRack.indexOf(bringBool);
+          if(bringBool)
+            if (bringBool.id === camId)
+              bringRack.splice(brBIndex,1);
           if(borrowBool)
             borrowBool.quantity = inNeed.quantity;
           else
@@ -124,7 +122,6 @@ export default class ParentCompare extends Component {
         else if (inNeed.quantity >= inHave.quantity){
           const needHaveDifference = (inNeed.quantity - inHave.quantity);
           if (needHaveDifference > 0){
-            console.log(needHaveDifference);
             const gearBool = bringRack.find(e => e.id === camId);
             if(gearBool)
               gearBool.quantity = inHave.quantity;
@@ -136,7 +133,15 @@ export default class ParentCompare extends Component {
                 borrowBool.quantity = needHaveDifference;
               else
                 borrowRack.push({id: camId, quantity: needHaveDifference});
-                
+          }      
+          else if (needHaveDifference < 0){
+            console.log('does this even trigger?')
+            const gearBool = bringRack.find(e => e.id === camId);
+            const gearBoolIndex = bringRack.indexOf(gearBool);
+            if(gearBool){
+              if (gearBool.id === camId)
+                bringRack.splice(gearBoolIndex,1);
+            }
           }
           else if( needHaveDifference === 0){
             const gearBool = bringRack.find(e => e.id === camId);
@@ -145,13 +150,13 @@ export default class ParentCompare extends Component {
             else
               bringRack.push({id: camId, quantity: inHave.quantity});
             const borrowBool = borrowRack.find(e => e.id === camId);
+            const bbIndex = borrowRack.indexOf(borrowBool);
             if(borrowBool){
-              for (var j = 0; j < borrowRack.length; j++)
                 if (borrowBool.id === camId)
                   if (((borrowBool.quantity) === 1) || ((borrowBool.quantity) === 0)){
-                    borrowRack.splice(j,1)
+                    borrowRack.splice(bbIndex,1);
                   }
-              }
+                }
           }
         }
         else/*(inNeed.quantity < inHave.quantity)*/{
@@ -161,15 +166,14 @@ export default class ParentCompare extends Component {
             else
               bringRack.push({id: camId, quantity: inNeed.quantity});
           const borrowBool = borrowRack.find(e => e.id === camId);
+          const bbIndex = borrowRack.indexOf(borrowBool);
           if(borrowBool){
-            for (var k = 0; k < borrowRack.length; k++)
               if (borrowBool.id === camId)
                 if (((borrowBool.quantity) === 1) || ((borrowBool.quantity) === 0)){
-                  borrowRack.splice(j,1)
+                  borrowRack.splice(bbIndex,1)
                 }
-            }
+          }
         }
-        console.log(bringRack);
       }
       else { 
         //DO NOTHING BECAUSE IT'S JUST BUILDING YOUR RACK AND IT'S NOT NEEDED YET
