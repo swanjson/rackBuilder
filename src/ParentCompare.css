@@ -1,10 +1,38 @@
+.ParentCompare{
+    width: 100%;
+    border: 1px solid grey;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 2px 4px 1px rgba(0,0,0,0.18); /*Box shadow Genereated with online box shadow generator*/
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: rgba(0,0,0,0.73);
+}
+
+.ParentCompare ul{
+    list-style-type: none;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid grey;
+}
+
 .borrow-ul-2{
     list-style-type: none;
     text-align: left;
     margin: 0;
     padding: 0;
-    background-color: rgba(200, 196, 100, 0.523);
+    background-color: rgba(197, 58, 174, 0.523);
 
+}
+
+.borrowQuantityTextBox{
+    float: right;
+    width: 10%;
+    text-align: center;
+    background-color: rgba(197, 58, 174, 0.523);
+    border: none;
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
 }
 
 .bring-ul-2{
@@ -12,6 +40,17 @@
     text-align: left;
     margin: 0;
     padding: 0;
-    background-color: rgba(200, 196, 100, 0.523);
+    background-color: rgba(51, 53, 185, 0.596);
 
+}
+
+.bringQuantityTextBox{
+    float: right;
+    width: 10%;
+    text-align: center;
+    background-color: rgba(51, 53, 185, 0.596);
+    border: none;
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
 }

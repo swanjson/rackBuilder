@@ -3,6 +3,10 @@ import CamObjects from './CamObjects'
 const camTemps = CamObjects;
 const similarCamData =[];
 
+function inBetween(point, low, high) {
+  return ((point - low)*(point - high) <= 0);
+}
+
 for (var i = 0; i < camTemps.length; i++){
   similarCamData.push({"id": camTemps[i].id, "sim2Ids": []});
   for (var j = 0; j < camTemps.length; j++){
@@ -26,11 +30,11 @@ for (var i = 0; i < camTemps.length; i++){
         similarCamData[i].sim2Ids.push(simObjectArray2Add);
       }
   }
+  similarCamData[i].sim2Ids.sort(function(a, b) { return b.overlapPercent - a.overlapPercent; }); //SORTS SIM2IDS BY PERCENTAGE
 }
 
-function inBetween(point, low, high) {
-  return ((point - low)*(point - high) <= 0);
-}
+export default similarCamData;
+
 
 /*      PRINT THE NUMBER OF SIMILAR ID OBJECTS
 function countProps(obj){
@@ -45,6 +49,6 @@ for (var i = 0; i < camTemps.length; i++){
 //console.log(similarCamData);
 //console.log(similarCamData[0].sim2Ids)
 
-export default similarCamData;
+
 
 

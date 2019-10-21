@@ -48,9 +48,8 @@ export default class RackNeededBar extends React.Component{
                 return <li key={value.id.toString()}>
                     {this.getItemString(CamObjects[value.id])}
                     <button className="addButton" onClick={() => this.suggestionSelected(value)}>+</button>
-                    <input className="rnquantityTextBox" value={value.quantity} onChange={this.onNumberChanged(value)} type="text" />
+                    <input className="rnquantityTextBox" value={value.quantity} type="text" />
                     <button className="deleteButton" onClick={() => this.props.minusNeed(value.id)}>-</button>
-                    {/*console.log("id:"+value.id,", quantity:"+value.quantity )*/}
                 </li>
             })}
         </ul>

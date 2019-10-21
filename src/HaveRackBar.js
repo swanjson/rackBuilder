@@ -26,18 +26,12 @@ export default class HaveRackBar extends React.Component{
         this.setState(() => ({hrbSuggestions, hrbText: value}));
     }
 
-    onNumberChanged = (value) => {
-        //this.setState(() =>
-
-            //do another loop and search through and change the quantity to whatever was entered
-            
-        //)
-        //console.log(value.id, value.quantity)
-    }
 
     getItemString = (item) => {
         return `${item.manufacturer} ${item.model} ${item.size} ${item.color}`;
     }
+
+    numberChansged
 
     createNewList(){
         if(this.props.rackHave.length === 0){
@@ -49,9 +43,8 @@ export default class HaveRackBar extends React.Component{
                 return <li key={value.id.toString()}>
                     {this.getItemString(CamObjects[value.id])}
                     <button className="addButton" onClick={() => this.suggestionSelected(value)}>+</button>
-                    <input className="hrquantityTextBox" value={value.quantity} onChange={this.onNumberChanged(value)} type="text" />
+                    <input className="hrquantityTextBox" value={value.quantity} type="text" />
                     <button className="deleteButton" onClick={() => this.props.minusHave(value.id)}>-</button>
-                    {/*console.log("id:"+value.id,", quantity:"+value.quantity )*/}
                 </li>
             })}
         </ul>
