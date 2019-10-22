@@ -43,7 +43,7 @@ export default class HaveRackBar extends React.Component{
                 return <li key={value.id.toString()}>
                     {this.getItemString(CamObjects[value.id])}
                     <button className="addButton" onClick={() => this.suggestionSelected(value)}>+</button>
-                    <input className="hrquantityTextBox" value={value.quantity} type="text" />
+                    <div className="hrquantityTextBox">{value.quantity}</div>
                     <button className="deleteButton" onClick={() => this.props.minusHave(value.id)}>-</button>
                 </li>
             })}
