@@ -128,14 +128,13 @@ export default class ParentCompare extends Component {
             else
               bringRack.push({id: camId, quantity: inHave.quantity});
               //Change borrow rack
-              const borrowBool = borrowRack.find(e => e.id === camId);
-              if(borrowBool)
-                borrowBool.quantity = needHaveDifference;
-              else
-                borrowRack.push({id: camId, quantity: needHaveDifference});
+            const borrowBool = borrowRack.find(e => e.id === camId);
+            if(borrowBool)
+              borrowBool.quantity = needHaveDifference;
+            else
+              borrowRack.push({id: camId, quantity: needHaveDifference});
           }      
           else if (needHaveDifference < 0){
-            console.log('does this even trigger?')
             const gearBool = bringRack.find(e => e.id === camId);
             const gearBoolIndex = bringRack.indexOf(gearBool);
             if(gearBool){
@@ -169,9 +168,8 @@ export default class ParentCompare extends Component {
           const bbIndex = borrowRack.indexOf(borrowBool);
           if(borrowBool){
               if (borrowBool.id === camId)
-                if (((borrowBool.quantity) === 1) || ((borrowBool.quantity) === 0)){
+                if (((borrowBool.quantity) === 1) || ((borrowBool.quantity) === 0))
                   borrowRack.splice(bbIndex,1)
-                }
           }
         }
       }
@@ -181,6 +179,11 @@ export default class ParentCompare extends Component {
         if(borrowBool)
           if((borrowBool.quantity) === 0 || ((borrowBool.quantity) === 1))   //Might just need to be zero
             borrowRack.splice(bbIndex,1);
+        const bringBool = bringRack.find(e => e.id === camId);
+        const brBIndex = bringRack.indexOf(bringBool);
+        if(bringBool)
+          if (bringBool.id === camId)
+            bringRack.splice(brBIndex,1);
       }
       return {bringRack, borrowRack};
     })
@@ -195,7 +198,7 @@ export default class ParentCompare extends Component {
         {this.state.bringRack.map((value) => {
             return <li key={value.id.toString()}>
                 {this.getItemString(CamObjects[value.id])}
-                <input className="bringQuantityTextBox" value={value.quantity} type="text" />
+                <div className="bringQuantityTextBox">{value.quantity}</div>
             </li>
         })}
     </ul>

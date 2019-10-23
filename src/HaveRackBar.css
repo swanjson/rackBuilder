@@ -18,7 +18,7 @@
     outline: none; /*removes the text input blue highlighting*/
 }
 
-.HaveRackBar ul{
+.HaveRackBar ul {
     list-style-type: none;
     text-align: left;
     margin: 0;
@@ -26,7 +26,7 @@
     border-top: 1px solid grey;
 }
 
-.rhul-2{
+.rhul-2 {
     list-style-type: none;
     text-align: left;
     margin: 0;
@@ -40,19 +40,23 @@
     border-radius: 50%;
     background-color: rgba(232, 47, 15, 0.851);
     float: right;
+    outline: none;
 }
 
 .addButton {
     border-radius: 50%;
     background-color: rgba(98, 232, 15, 0.851);
     float: right;
+    outline: none;
+
 }
 
-.hrquantityTextBox{
+.hrquantityTextBox {
     float: right;
     width: 10%;
     text-align: center;
-    background-color: rgba(119, 186, 77, 0.523);
+    background-color: rgba(119, 186, 77, 0);
+    /* border: 1px solid rgba(119, 186, 77, .8); */
     border: none;
     font-size: 18px;
     margin: 0;
@@ -60,16 +64,16 @@
 }
 
 
-.HaveRackBar ul::before{ /*allows us to remove the spacing between the input box and the ul*/
+.HaveRackBar ul::before { /*allows us to remove the spacing between the input box and the ul*/
     content: "";
 }
 
-.HaveRackBar li{
-    padding: 10px 5px;
+.HaveRackBar li {
+    padding: 10px 10px;
     cursor: pointer;
 }
 
-.HaveRackBar li:hover{
+.HaveRackBar li:hover {
     text-decoration: underline;
     background-color: rgba(128,128,128,0.2);
 }

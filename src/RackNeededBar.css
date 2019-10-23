@@ -40,12 +40,14 @@
     border-radius: 50%;
     background-color: rgba(232, 47, 15, 0.851);
     float: right;
+    outline: none;
 }
 
 .addButton {
     border-radius: 50%;
     background-color: rgba(98, 232, 15, 0.851);
     float: right;
+    outline: none;
 }
 
 .rnquantityTextBox{
@@ -65,7 +67,7 @@
 }
 
 .RackNeededBar li{
-    padding: 10px 5px;
+    padding: 10px 10px;
     cursor: pointer;
 }
 

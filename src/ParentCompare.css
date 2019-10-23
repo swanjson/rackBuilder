@@ -7,7 +7,7 @@
     color: rgba(0,0,0,0.73);
 }
 
-.ParentCompare ul{
+.ParentCompare ul {
     list-style-type: none;
     text-align: left;
     margin: 0;
@@ -15,42 +15,44 @@
     border-top: 1px solid grey;
 }
 
-.borrow-ul-2{
+.borrow-ul-2 {
     list-style-type: none;
     text-align: left;
     margin: 0;
     padding: 0;
     background-color: rgba(197, 58, 174, 0.523);
-
 }
 
-.borrowQuantityTextBox{
+.borrowQuantityTextBox {
     float: right;
     width: 10%;
     text-align: center;
-    background-color: rgba(197, 58, 174, 0.523);
+    background-color: rgba(197, 58, 174, 0);
     border: none;
     font-size: 18px;
     margin: 0;
     padding: 0;
 }
 
-.bring-ul-2{
+.bring-ul-2 {
     list-style-type: none;
     text-align: left;
     margin: 0;
     padding: 0;
     background-color: rgba(51, 53, 185, 0.596);
-
 }
 
-.bringQuantityTextBox{
+.bringQuantityTextBox {
     float: right;
     width: 10%;
     text-align: center;
-    background-color: rgba(51, 53, 185, 0.596);
-    border: none;
+    background-color: rgba(51, 53, 185, 0);
     font-size: 18px;
     margin: 0;
     padding: 0;
+}
+
+li {
+    padding: 10px 10px;
+    cursor: pointer;
 }
