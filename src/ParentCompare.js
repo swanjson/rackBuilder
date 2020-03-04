@@ -175,12 +175,17 @@ export default class ParentCompare extends Component {
           }
         }
       }
-      else { //REMOVES CAM FROM BORROW WHEN REMOVED FROM NEED RACK
+      else { 
         const borrowBool = borrowRack.find(e => e.id === camId);
+        const bringBool = bringRack.find(e => e.id === camId);
         const bbIndex = borrowRack.indexOf(borrowBool);
-        if(borrowBool)
+        const brBIndex = bringRack.indexOf(bringBool);
+        if(borrowBool) //REMOVES CAM FROM BORROW WHEN REMOVED FROM NEED RACK
           if((borrowBool.quantity) === 0 || ((borrowBool.quantity) === 1))   //Might just need to be zero
             borrowRack.splice(bbIndex,1);
+        if(bringBool) //REMOVES CAM FROM BRING WHEN REMOVED FROM NEED RACK
+          if((bringBool.quantity) === 0 || ((bringBool.quantity) === 1))   //Might just need to be zero
+            bringRack.splice(brBIndex,1);
       }
       return {bringRack, borrowRack};
     })
