@@ -44,17 +44,12 @@ export default class ParentCompare extends Component {
       const yourRack = prevState.yourRack;
       const gearBool = yourRack.find(e => e.id === camId);
       const foundIndex = yourRack.indexOf(gearBool);
-      if(gearBool){
-          if (gearBool.id === camId){
-            if ((gearBool.quantity) === 1){
-              alert("Just deleted the cam from the list!") //change to which cam or an "are you sure?" dialogue
-              yourRack.splice(foundIndex,1)
-            }
-            else {
-              gearBool.quantity = gearBool.quantity - 1;
-            }
-          }
-        }
+      if(gearBool && gearBool.id === camId && gearBool.quantity === 1){
+        alert("Just deleted the cam from the list!"); //change to which cam or an "are you sure?" dialogue
+        yourRack.splice(foundIndex,1);
+      }
+      else
+        gearBool.quantity = gearBool.quantity - 1;
       return {yourRack};
     });
     this.bringBorrowCompare(camId);
@@ -81,16 +76,12 @@ export default class ParentCompare extends Component {
       const rackNeeded = prevState.rackNeeded;
       const gearBool = rackNeeded.find(e => e.id === camId);
       const foundIndex = rackNeeded.indexOf(gearBool);
-      if(gearBool){
-          if (gearBool.id === camId)
-            if ((gearBool.quantity) === 1){
-              alert("Just deleted the cam from the list!") //change to which cam or an "are you sure?" dialogue
-              rackNeeded.splice(foundIndex,1)
-            }
-            else {
-              gearBool.quantity -= 1;
-            }
-        }
+      if(gearBool && gearBool.id === camId && gearBool.quantity === 1){
+        alert("Just deleted the cam from the list!") //change to which cam or an "are you sure?" dialogue
+        rackNeeded.splice(foundIndex,1)
+      }
+      else
+        gearBool.quantity -= 1;
       return {rackNeeded};
     });
     this.bringBorrowCompare(camId);
@@ -139,8 +130,7 @@ export default class ParentCompare extends Component {
               this.spliceFromRack(borrowRack,bbIndex);
           }
         }
-      
-        else/*(inNeed.quantity < inHave.quantity)*/{
+        else{ /*(inNeed.quantity < inHave.quantity)*/
           if(bringBool)
             this.setQuantityEqualTo(bringBool,inNeed);
           else
@@ -149,15 +139,14 @@ export default class ParentCompare extends Component {
             this.spliceFromRack(borrowRack,bbIndex);
         }  
       }
-    
-    else { 
-      if(borrowBool && borrowBool.quantity === 1) //REMOVES CAM FROM BORROW WHEN REMOVED FROM NEED RACK
-        this.spliceFromRack(borrowRack,bbIndex);
-      if(bringBool && (bringBool.quantity === 1)) //REMOVES CAM FROM BRING WHEN REMOVED FROM NEED RACK
-        this.spliceFromRack(bringRack,brBIndex);
-    }
+      else { 
+        if(borrowBool && borrowBool.quantity === 1) //REMOVES CAM FROM BORROW WHEN REMOVED FROM NEED RACK
+          this.spliceFromRack(borrowRack,bbIndex);
+        if(bringBool && (bringBool.quantity === 1)) //REMOVES CAM FROM BRING WHEN REMOVED FROM NEED RACK
+          this.spliceFromRack(bringRack,brBIndex);
+      }
       return {bringRack, borrowRack};
-    })
+      })
   }
 
   setQuantityEqualTo(rack1,rack2){
