@@ -104,91 +104,111 @@ export default class ParentCompare extends Component {
       const borrowRack = prevState.borrowRack;
       const rackNeeded = prevState.rackNeeded;
       const yourRack = prevState.yourRack;
+
+      // is there a way to see if these declarations are impossible? or is that for a test?
       const inNeed = rackNeeded.find(e => e.id === camId);
       const inHave = yourRack.find(e => e.id === camId);
+      const bringBool = bringRack.find(e => e.id === camId);
+      const borrowBool = borrowRack.find(e => e.id === camId);
+
+      
+
+      if (inNeed === null)
+        inNeed.quantity = 0;
+
+      if (inHave === null)
+        inHave.quantity = 0;
+
+        console.log('inNeed quantity: ' + inNeed.quantity);
+        console.log('inHave quantity: ' + inHave.quantity);
+
+
+      const bbIndex = borrowRack.indexOf(borrowBool);
+      const brBIndex = bringRack.indexOf(bringBool);
+
+
+
+
+      const needHaveDifference = (inNeed.quantity - inHave.quantity);
+
+
+
+
+
+
+
+
+
+
+
       if (inNeed){ //It is in needed. I need to see the quantity in needed and compare to how many I have and reset it everytime.
         if(!inHave){
-          const bringBool = bringRack.find(e => e.id === camId);
-          const brBIndex = bringRack.indexOf(bringBool);
           if(bringBool)
             if (bringBool.id === camId)
-              bringRack.splice(brBIndex,1); //REMOVES CAM FROM BRING RACK IF HAVE RACK QUANTITY GOES TO ZERO
-          const borrowBool = borrowRack.find(e => e.id === camId);
+            this.spliceFromRack(bringRack,brBIndex); //REMOVES CAM FROM BRING RACK IF HAVE RACK QUANTITY GOES TO ZERO
           if(borrowBool)
             borrowBool.quantity = inNeed.quantity;
           else
             borrowRack.push({id: camId, quantity: inNeed.quantity});
         }
         else if (inNeed.quantity >= inHave.quantity){
-          const needHaveDifference = (inNeed.quantity - inHave.quantity);
           if (needHaveDifference > 0){
-            const gearBool = bringRack.find(e => e.id === camId);
-            if(gearBool)
-              gearBool.quantity = inHave.quantity;
+            if(bringBool)
+            bringBool.quantity = inHave.quantity;
             else
               bringRack.push({id: camId, quantity: inHave.quantity});
               //Change borrow rack
-              const borrowBool = borrowRack.find(e => e.id === camId);
               if(borrowBool)
                 borrowBool.quantity = needHaveDifference;
               else
                 borrowRack.push({id: camId, quantity: needHaveDifference});
           }      
           else if (needHaveDifference < 0){
-            console.log('does this even trigger?')
-            const gearBool = bringRack.find(e => e.id === camId);
-            const gearBoolIndex = bringRack.indexOf(gearBool);
-            if(gearBool){
-              if (gearBool.id === camId)
-                bringRack.splice(gearBoolIndex,1);
+            if(bringBool){
+              if (bringBool.id === camId)
+              this.spliceFromRack(bringRack,brBIndex);
             }
           }
           else if( needHaveDifference === 0){
-            const gearBool = bringRack.find(e => e.id === camId);
-            if(gearBool)
-              gearBool.quantity = inHave.quantity;
+            if(bringBool)
+            bringBool.quantity = inHave.quantity;
             else
               bringRack.push({id: camId, quantity: inHave.quantity});
-            const borrowBool = borrowRack.find(e => e.id === camId);
-            const bbIndex = borrowRack.indexOf(borrowBool);
             if(borrowBool){
                 if (borrowBool.id === camId)
                   if (((borrowBool.quantity) === 1) || ((borrowBool.quantity) === 0)){
-                    borrowRack.splice(bbIndex,1);
+                    this.spliceFromRack(borrowRack,bbIndex);
                   }
                 }
           }
         }
         else/*(inNeed.quantity < inHave.quantity)*/{
-          const gearBool = bringRack.find(e => e.id === camId);
-            if(gearBool)
-              gearBool.quantity = inNeed.quantity;
+            if(bringBool)
+            bringBool.quantity = inNeed.quantity;
             else
               bringRack.push({id: camId, quantity: inNeed.quantity});
-          const borrowBool = borrowRack.find(e => e.id === camId);
-          const bbIndex = borrowRack.indexOf(borrowBool);
           if(borrowBool){
               if (borrowBool.id === camId)
                 if (((borrowBool.quantity) === 1) || ((borrowBool.quantity) === 0)){
-                  borrowRack.splice(bbIndex,1)
+                  this.spliceFromRack(borrowRack,bbIndex);
                 }
           }
         }
       }
       else { 
-        const borrowBool = borrowRack.find(e => e.id === camId);
-        const bringBool = bringRack.find(e => e.id === camId);
-        const bbIndex = borrowRack.indexOf(borrowBool);
-        const brBIndex = bringRack.indexOf(bringBool);
         if(borrowBool) //REMOVES CAM FROM BORROW WHEN REMOVED FROM NEED RACK
           if((borrowBool.quantity) === 0 || ((borrowBool.quantity) === 1))   //Might just need to be zero
-            borrowRack.splice(bbIndex,1);
+            this.spliceFromRack(borrowRack,bbIndex);
         if(bringBool) //REMOVES CAM FROM BRING WHEN REMOVED FROM NEED RACK
           if((bringBool.quantity) === 0 || ((bringBool.quantity) === 1))   //Might just need to be zero
-            bringRack.splice(brBIndex,1);
+            this.spliceFromRack(bringRack,brBIndex);
       }
       return {bringRack, borrowRack};
     })
+  }
+
+  spliceFromRack(rack,index){
+    rack.splice(index,1);
   }
 
   createNewBringList(){
