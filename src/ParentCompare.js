@@ -22,7 +22,7 @@ export default class ParentCompare extends Component {
 
   getItemString = (item) => {
     return `${item.manufacturer} ${item.model} ${item.size} ${item.color}`;
-}
+  }
 
 /*FOR HAVE RACK*/
   addCamToHaveRack = (camId) => {
@@ -97,114 +97,75 @@ export default class ParentCompare extends Component {
   }
 
 
-  //FIGURE OUT EMPTY ARRAY CASES
   bringBorrowCompare = (camId) => { //if called from all change functions that must mean there's at least one in the have rack.
-    this.setState((prevState) => {
-      const bringRack = prevState.bringRack;
-      const borrowRack = prevState.borrowRack;
-      const rackNeeded = prevState.rackNeeded;
-      const yourRack = prevState.yourRack;
-
+    this.setState(({bringRack, borrowRack, rackNeeded, yourRack}) => { 
       // is there a way to see if these declarations are impossible? or is that for a test?
       const inNeed = rackNeeded.find(e => e.id === camId);
       const inHave = yourRack.find(e => e.id === camId);
       const bringBool = bringRack.find(e => e.id === camId);
       const borrowBool = borrowRack.find(e => e.id === camId);
-
-      
-
-      if (inNeed === null)
-        inNeed.quantity = 0;
-
-      if (inHave === null)
-        inHave.quantity = 0;
-
-        console.log('inNeed quantity: ' + inNeed.quantity);
-        console.log('inHave quantity: ' + inHave.quantity);
-
-
-      const bbIndex = borrowRack.indexOf(borrowBool);
       const brBIndex = bringRack.indexOf(bringBool);
-
-
-
-
-      const needHaveDifference = (inNeed.quantity - inHave.quantity);
-
-
-
-
-
-
-
-
-
-
+      const bbIndex = borrowRack.indexOf(borrowBool);
 
       if (inNeed){ //It is in needed. I need to see the quantity in needed and compare to how many I have and reset it everytime.
         if(!inHave){
-          if(bringBool)
-            if (bringBool.id === camId)
+          if(bringBool && (bringBool.id === camId))
             this.spliceFromRack(bringRack,brBIndex); //REMOVES CAM FROM BRING RACK IF HAVE RACK QUANTITY GOES TO ZERO
           if(borrowBool)
-            borrowBool.quantity = inNeed.quantity;
+            this.setQuantityEqualTo(borrowBool,inNeed);
           else
-            borrowRack.push({id: camId, quantity: inNeed.quantity});
+            this.pushToRack(borrowRack,camId,inNeed);
         }
         else if (inNeed.quantity >= inHave.quantity){
+          const needHaveDifference = (inNeed.quantity - inHave.quantity);
           if (needHaveDifference > 0){
             if(bringBool)
-            bringBool.quantity = inHave.quantity;
+              this.setQuantityEqualTo(bringBool,inHave);
             else
-              bringRack.push({id: camId, quantity: inHave.quantity});
-              //Change borrow rack
+              this.pushToRack(bringRack,camId,inHave);
               if(borrowBool)
                 borrowBool.quantity = needHaveDifference;
               else
                 borrowRack.push({id: camId, quantity: needHaveDifference});
           }      
-          else if (needHaveDifference < 0){
-            if(bringBool){
-              if (bringBool.id === camId)
-              this.spliceFromRack(bringRack,brBIndex);
-            }
-          }
-          else if( needHaveDifference === 0){
-            if(bringBool)
-            bringBool.quantity = inHave.quantity;
-            else
-              bringRack.push({id: camId, quantity: inHave.quantity});
-            if(borrowBool){
-                if (borrowBool.id === camId)
-                  if (((borrowBool.quantity) === 1) || ((borrowBool.quantity) === 0)){
-                    this.spliceFromRack(borrowRack,bbIndex);
-                  }
-                }
-          }
-        }
-        else/*(inNeed.quantity < inHave.quantity)*/{
-            if(bringBool)
-            bringBool.quantity = inNeed.quantity;
-            else
-              bringRack.push({id: camId, quantity: inNeed.quantity});
-          if(borrowBool){
-              if (borrowBool.id === camId)
-                if (((borrowBool.quantity) === 1) || ((borrowBool.quantity) === 0)){
-                  this.spliceFromRack(borrowRack,bbIndex);
-                }
-          }
-        }
-      }
-      else { 
-        if(borrowBool) //REMOVES CAM FROM BORROW WHEN REMOVED FROM NEED RACK
-          if((borrowBool.quantity) === 0 || ((borrowBool.quantity) === 1))   //Might just need to be zero
-            this.spliceFromRack(borrowRack,bbIndex);
-        if(bringBool) //REMOVES CAM FROM BRING WHEN REMOVED FROM NEED RACK
-          if((bringBool.quantity) === 0 || ((bringBool.quantity) === 1))   //Might just need to be zero
+          else if (needHaveDifference < 0 && bringBool && bringBool.id === camId)
             this.spliceFromRack(bringRack,brBIndex);
+          else if(needHaveDifference === 0){ /* IF YOURRACK and RACKNEEDED ARE THE SAME*/
+            if(bringBool)
+              this.setQuantityEqualTo(bringBool,inHave);
+            else
+              this.pushToRack(bringRack,camId,inHave);
+            if(borrowBool && borrowBool.id === camId && ((borrowBool.quantity) === 1))
+              this.spliceFromRack(borrowRack,bbIndex);
+          }
+        }
+      
+        else/*(inNeed.quantity < inHave.quantity)*/{
+          if(bringBool)
+            this.setQuantityEqualTo(bringBool,inNeed);
+          else
+            this.pushToRack(bringRack,camId,inNeed);
+          if(borrowBool && borrowBool.id === camId && (borrowBool.quantity === 1))
+            this.spliceFromRack(borrowRack,bbIndex);
+        }  
       }
+    
+    else { 
+      if(borrowBool && borrowBool.quantity === 1) //REMOVES CAM FROM BORROW WHEN REMOVED FROM NEED RACK
+        this.spliceFromRack(borrowRack,bbIndex);
+      if(bringBool && (bringBool.quantity === 1)) //REMOVES CAM FROM BRING WHEN REMOVED FROM NEED RACK
+        this.spliceFromRack(bringRack,brBIndex);
+    }
       return {bringRack, borrowRack};
     })
+  }
+
+  setQuantityEqualTo(rack1,rack2){
+    rack1.quantity = rack2.quantity;
+  }
+
+  pushToRack(rack,id,rack2){
+    rack.push({id: id, quantity: rack2.quantity});
   }
 
   spliceFromRack(rack,index){

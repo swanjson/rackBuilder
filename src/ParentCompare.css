@@ -21,7 +21,7 @@
     margin: 0;
     padding: 0;
     background-color: rgba(197, 58, 174, 0.523);
-
+    display: grid;
 }
 
 .borrowQuantityTextBox{
@@ -41,7 +41,7 @@
     margin: 0;
     padding: 0;
     background-color: rgba(51, 53, 185, 0.596);
-
+    display: grid;
 }
 
 .bringQuantityTextBox{
