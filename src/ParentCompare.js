@@ -58,7 +58,7 @@ export default class ParentCompare extends Component {
 /*FOR RACK NEEDED*/
   addCamToRackNeeded = (camId) => {
     this.setState((prevState) => {
-      const rackNeeded = prevState.rackNeeded;
+      const rackNeeded = [...prevState.rackNeeded] //spreading an array (triple dot operator)
       const gearBool = rackNeeded.find(e => e.id === camId);
       if(gearBool)
         gearBool.quantity += 1;
@@ -89,26 +89,33 @@ export default class ParentCompare extends Component {
 
 
   bringBorrowCompare = (camId) => { //if called from all change functions that must mean there's at least one in the have rack.
-    this.setState(({bringRack, borrowRack, rackNeeded, yourRack}) => { 
+    this.setState((prevState) => { 
+      const { // Better to do this object destructuring this way instead of inline for communication to humans
+        bringRack,
+        borrowRack,
+        rackNeeded,
+        yourRack
+      } = prevState;
+      
       // is there a way to see if these declarations are impossible? or is that for a test?
-      const inNeed = rackNeeded.find(e => e.id === camId);
-      const inHave = yourRack.find(e => e.id === camId);
+      const inNeed = rackNeeded.find(e => e.id === camId) || {quantity: 0}; //short circuiting to initialize
+      const inHave = yourRack.find(e => e.id === camId) || {quantity: 0};
       const bringBool = bringRack.find(e => e.id === camId);
       const borrowBool = borrowRack.find(e => e.id === camId);
       const brBIndex = bringRack.indexOf(bringBool);
       const bbIndex = borrowRack.indexOf(borrowBool);
+      const needHaveDifference = (inNeed.quantity - inHave.quantity);
 
       if (inNeed){ //It is in needed. I need to see the quantity in needed and compare to how many I have and reset it everytime.
         if(!inHave){
-          if(bringBool && (bringBool.id === camId))
+          if(bringBool && bringBool.id === camId)
             this.spliceFromRack(bringRack,brBIndex); //REMOVES CAM FROM BRING RACK IF HAVE RACK QUANTITY GOES TO ZERO
           if(borrowBool)
             this.setQuantityEqualTo(borrowBool,inNeed);
           else
             this.pushToRack(borrowRack,camId,inNeed);
         }
-        else if (inNeed.quantity >= inHave.quantity){
-          const needHaveDifference = (inNeed.quantity - inHave.quantity);
+        else if (inNeed.quantity >= inHave.quantity){   
           if (needHaveDifference > 0){
             if(bringBool)
               this.setQuantityEqualTo(bringBool,inHave);
@@ -122,11 +129,12 @@ export default class ParentCompare extends Component {
           else if (needHaveDifference < 0 && bringBool && bringBool.id === camId)
             this.spliceFromRack(bringRack,brBIndex);
           else if(needHaveDifference === 0){ /* IF YOURRACK and RACKNEEDED ARE THE SAME*/
-            if(bringBool)
-              this.setQuantityEqualTo(bringBool,inHave);
+            if(bringBool){
+            this.setQuantityEqualTo(bringBool,inHave);
+            }
             else
               this.pushToRack(bringRack,camId,inHave);
-            if(borrowBool && borrowBool.id === camId && ((borrowBool.quantity) === 1))
+            if(borrowBool && borrowBool.id === camId && borrowBool.quantity === 1)
               this.spliceFromRack(borrowRack,bbIndex);
           }
         }
@@ -135,7 +143,7 @@ export default class ParentCompare extends Component {
             this.setQuantityEqualTo(bringBool,inNeed);
           else
             this.pushToRack(bringRack,camId,inNeed);
-          if(borrowBool && borrowBool.id === camId && (borrowBool.quantity === 1))
+          if(borrowBool && borrowBool.id === camId && borrowBool.quantity === 1)
             this.spliceFromRack(borrowRack,bbIndex);
         }  
       }
